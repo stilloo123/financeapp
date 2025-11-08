@@ -1,0 +1,86 @@
+/* Form Styles */
+.form-container {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-panel, .info-panel {
+    padding: 20px;
+}
+
+.form-panel h2 {
+    margin-bottom: 20px;
+    color: #667eea;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e7ff;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.radio-label:hover {
+    background: #f8fafc;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 10px;
+}
+
+.info-panel {
+    background: #f8fafc;
+    border-radius: 5px;
+}
+
+.info-panel h3, .info-panel h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #667eea;
+}
+
+.info-panel ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.info-panel li {
+    margin-bottom: 5px;
+}

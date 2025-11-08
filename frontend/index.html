@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage vs. Investment Optimizer</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/form.css">
+    <link rel="stylesheet" href="styles/results.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Mortgage vs. Investment Optimizer</h1>
+            <p class="subtitle">Should you pay off your mortgage or invest in the market?</p>
+        </header>
+
+        <!-- Input Form Section -->
+        <section id="input-section" class="section">
+            <div class="form-container">
+                <div class="form-panel">
+                    <h2>Your Mortgage Details</h2>
+                    <form id="mortgage-form">
+                        <div class="form-group">
+                            <label for="mortgage-balance">Current Mortgage Balance ($)</label>
+                            <input type="number" id="mortgage-balance" name="mortgage_balance"
+                                   value="500000" min="50000" max="5000000" step="1000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interest-rate">Mortgage Interest Rate (APR %)</label>
+                            <input type="number" id="interest-rate" name="interest_rate"
+                                   value="3.0" min="0.1" max="15" step="0.1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="years-remaining">Years Remaining</label>
+                            <input type="number" id="years-remaining" name="years_remaining"
+                                   value="25" min="1" max="30" step="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Risk Tolerance</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="risk_tolerance" value="aggressive">
+                                    <span>Aggressive (Median - 50% success rate)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="risk_tolerance" value="moderate">
+                                    <span>Moderate (75th percentile - 75% success rate)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="risk_tolerance" value="conservative" checked>
+                                    <span>Conservative (90th percentile - 90% success rate)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="calculate-btn">
+                            Calculate Results
+                        </button>
+                    </form>
+                </div>
+
+                <div class="info-panel">
+                    <h3>How It Works</h3>
+                    <p>This tool uses 100 years of actual S&P 500 returns (1926-2024) to determine the minimum investment needed to fund your mortgage payments.</p>
+
+                    <h4>Key Assumptions:</h4>
+                    <ul>
+                        <li>Investment in S&P 500 index fund (like VTI)</li>
+                        <li>Annual withdrawals for mortgage payments</li>
+                        <li>Historical returns include dividends</li>
+                        <li>No taxes (assumes tax-advantaged account)</li>
+                        <li><strong>Early payoff optimization:</strong> If balance exceeds remaining mortgage, pay it off immediately</li>
+                    </ul>
+
+                    <h4>Why This Matters:</h4>
+                    <p>Unlike calculators using average returns, this tool accounts for <strong>sequence of returns risk</strong>. Starting withdrawals during a market crash (like 2008: -37%) requires more initial capital than during a bull market.</p>
+                    <p><strong>Early payoff benefit:</strong> With good early returns, you may pay off the mortgage in 10-15 years instead of the full term, with money left over!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Running historical backtesting...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results-section" class="section hidden">
+            <h2>Analysis Results</h2>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>Your Mortgage</h3>
+                    <div class="card-content">
+                        <div class="metric">
+                            <span class="label">Balance:</span>
+                            <span class="value" id="summary-balance">$0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Rate:</span>
+                            <span class="value" id="summary-rate">0%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Years:</span>
+                            <span class="value" id="summary-years">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Annual Payment:</span>
+                            <span class="value" id="summary-payment">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <h3>Recommended Investment</h3>
+                    <div class="card-content">
+                        <div class="metric large">
+                            <span class="value" id="recommended-amount">$0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label" id="recommended-label">90th Percentile</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Success Rate:</span>
+                            <span class="value" id="success-rate">90%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Typical Payoff Time:</span>
+                            <span class="value" id="payoff-time">-- years</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Leftover Amount:</span>
+                            <span class="value" id="leftover-amount">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card success">
+                    <h3>Potential Savings</h3>
+                    <div class="card-content">
+                        <div class="metric large">
+                            <span class="value" id="savings-amount">$0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">vs. paying off directly</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Scenarios Tested</h3>
+                    <div class="card-content">
+                        <div class="metric large">
+                            <span class="value" id="scenarios-tested">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Historical Periods</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h3>Required Investment Distribution</h3>
+                    <canvas id="distribution-chart"></canvas>
+                </div>
+
+                <div class="chart-wrapper">
+                    <h3>Risk Analysis</h3>
+                    <canvas id="risk-chart"></canvas>
+                </div>
+
+                <div class="chart-wrapper full-width">
+                    <h3>Account Balance Over Time - Key Scenarios</h3>
+                    <canvas id="balance-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="results-table">
+                <h3>Investment Requirements by Risk Level</h3>
+                <table id="requirements-table">
+                    <thead>
+                        <tr>
+                            <th>Risk Level</th>
+                            <th>Investment Required</th>
+                            <th>Years to Payoff</th>
+                            <th>Leftover Amount</th>
+                            <th>Success Rate</th>
+                            <th>Historical Period Example</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requirements-tbody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Historical Period Explorer -->
+            <div class="period-explorer">
+                <h3>Explore Specific Historical Periods</h3>
+                <p>See what would have happened if you started investing in a specific year:</p>
+
+                <div class="period-selector">
+                    <label for="period-select">Select a historical period:</label>
+                    <select id="period-select">
+                        <option value="">-- Choose a period --</option>
+                    </select>
+                </div>
+
+                <div id="period-details" class="period-details hidden">
+                    <h4>Period: <span id="period-name"></span></h4>
+
+                    <div class="period-summary">
+                        <div class="metric">
+                            <span class="label">Investment Required:</span>
+                            <span class="value" id="period-investment">$0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Years to Payoff:</span>
+                            <span class="value" id="period-years">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Leftover Amount:</span>
+                            <span class="value" id="period-leftover">$0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Paid Off Early:</span>
+                            <span class="value" id="period-early">No</span>
+                        </div>
+                    </div>
+
+                    <div class="chart-wrapper">
+                        <h4>Year-by-Year Balance</h4>
+                        <canvas id="period-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="adjust-btn">Adjust Parameters</button>
+                <button class="btn btn-secondary" id="export-btn">Export Data (CSV)</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/api-client.js"></script>
+    <script src="scripts/chart-builder.js"></script>
+    <script src="scripts/results-renderer.js"></script>
+    <script src="scripts/form-handler.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
