@@ -29,6 +29,7 @@ interface Strategy {
   max_outcome: number
   mortgage_payoff_year: number
   projection_years: number
+  bond_type?: 'fund' | 'treasury'
   period_details?: PeriodDetail[]
   worst_periods?: PeriodDetail[]
   best_periods?: PeriodDetail[]
