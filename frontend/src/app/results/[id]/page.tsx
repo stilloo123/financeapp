@@ -264,9 +264,9 @@ export default function ResultsPage() {
                   <div>• 75 historical 25-year periods</div>
                   <div>• 300 backtested scenarios</div>
                   {result.bond_return_used && (
-                    <div>• Treasury: {result.bond_return_used.toFixed(2)}% (30-year)</div>
+                    <div>• Treasury: {result.bond_return_used.toFixed(2)}% (today's 30-year rate, no rebalancing)</div>
                   )}
-                  <div>• Bond Fund: Damodaran 10-yr Treasury</div>
+                  <div>• Bond Fund: 10-yr Treasury historical data (with annual rebalancing)</div>
                   <div className="text-gray-500 italic mt-2">Source: NYU Stern / CRSP / FRED</div>
                 </div>
               </div>
@@ -364,10 +364,10 @@ export default function ResultsPage() {
                           <div className="text-xs text-gray-600 mb-3">
                             {stockPct}% S&P 500 (${(stockAmount / 1000000).toFixed(2)}M) + {bondPct}% Bonds (${(bondAmount / 1000000).toFixed(2)}M)
                             {strategy.bond_type === 'fund' && bondPct > 0 && (
-                              <span className="text-blue-600 font-semibold"> • 10-yr Treasury Bond Fund (Damodaran) w/ Annual Rebalancing</span>
+                              <span className="text-blue-600 font-semibold"> • 10-yr Treasury Bond Fund (historical data w/ annual rebalancing)</span>
                             )}
                             {strategy.bond_type === 'treasury' && bondPct > 0 && result.bond_return_used && (
-                              <span> • 30-yr Treasury at {result.bond_return_used.toFixed(2)}%</span>
+                              <span className="text-green-600 font-semibold"> • 30-yr Treasury at {result.bond_return_used.toFixed(2)}% (today's rate, no rebalancing)</span>
                             )}
                           </div>
                         )
@@ -467,10 +467,10 @@ export default function ResultsPage() {
                                 <div className="text-xs text-gray-600 mb-2">
                                   {stockPct}% S&P 500 (${(stockAmount / 1000000).toFixed(2)}M) + {bondPct}% Bonds (${(bondAmount / 1000000).toFixed(2)}M)
                                   {strategy.bond_type === 'fund' && bondPct > 0 && (
-                                    <span className="text-blue-600 font-semibold"> • 10-yr Treasury Bond Fund (Damodaran) w/ Annual Rebalancing</span>
+                                    <span className="text-blue-600 font-semibold"> • 10-yr Treasury Bond Fund (historical data w/ annual rebalancing)</span>
                                   )}
                                   {strategy.bond_type === 'treasury' && bondPct > 0 && result.bond_return_used && (
-                                    <span> • 30-yr Treasury at {result.bond_return_used.toFixed(2)}%</span>
+                                    <span className="text-green-600 font-semibold"> • 30-yr Treasury at {result.bond_return_used.toFixed(2)}% (today's rate, no rebalancing)</span>
                                   )}
                                 </div>
                               )
