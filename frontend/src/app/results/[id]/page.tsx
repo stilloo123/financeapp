@@ -321,8 +321,10 @@ export default function ResultsPage() {
                     ? ((strategy.median_outcome - comparisonStrategy.median_outcome) / 1000000).toFixed(1)
                     : '0.0'
 
+                  const uniqueKey = `${strategy.name}-${strategy.bond_type || 'default'}`
+
                   return (
-                    <div key={strategy.name} className={`border-2 rounded-lg p-5 ${
+                    <div key={uniqueKey} className={`border-2 rounded-lg p-5 ${
                       strategy.tags && strategy.tags.length > 1 ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
                     }`}>
                       <div className="flex items-center gap-2 mb-3">
@@ -417,9 +419,10 @@ export default function ResultsPage() {
               <div className="space-y-4">
                 {result.strategies.map((strategy, index) => {
                   const isExpanded = expandedStrategy === strategy.name
+                  const uniqueKey = `${strategy.name}-${strategy.bond_type || 'default'}`
                   return (
                     <div
-                      key={strategy.name}
+                      key={uniqueKey}
                       className={`border-2 rounded-lg transition-all cursor-pointer hover:shadow-md ${
                         strategy.tags && strategy.tags.length > 1 ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
                       }`}
