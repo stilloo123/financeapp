@@ -34,6 +34,14 @@ class StrategyAgent(BaseAgent):
         stock_allocation = user_input['financial'].get('stock_allocation_pct', 100)
         has_bonds = stock_allocation < 100
 
+        print(f"\n{'='*60}")
+        print(f"DEBUG: Strategy Selection")
+        print(f"{'='*60}")
+        print(f"Stock Allocation: {stock_allocation}% (type: {type(stock_allocation)})")
+        print(f"Has Bonds: {has_bonds}")
+        print(f"Will create {4 if has_bonds else 2} strategies")
+        print(f"{'='*60}\n")
+
         if has_bonds:
             # User has bonds - test both Treasury and Bond Fund scenarios
             # Strategy 1: Pay off completely - Treasury Bonds
