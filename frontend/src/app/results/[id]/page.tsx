@@ -311,6 +311,16 @@ export default function ResultsPage() {
                   const isKeepInvested = strategy.name.includes('Keep')
                   const isPayOff = strategy.name.includes('Pay Off')
 
+                  // Find the comparison strategy (opposite action, same bond type)
+                  const comparisonStrategy = result.strategies.find(s =>
+                    s.bond_type === strategy.bond_type &&
+                    (isKeepInvested ? s.name.includes('Pay Off') : s.name.includes('Keep'))
+                  )
+
+                  const medianDifference = comparisonStrategy
+                    ? ((strategy.median_outcome - comparisonStrategy.median_outcome) / 1000000).toFixed(1)
+                    : '0.0'
+
                   return (
                     <div key={strategy.name} className={`border-2 rounded-lg p-5 ${
                       strategy.tags && strategy.tags.length > 1 ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
@@ -387,9 +397,9 @@ export default function ResultsPage() {
                           <div className="font-semibold text-gray-900 mb-1">Trade-off:</div>
                           <div className="text-gray-700">
                             {isKeepInvested ? (
-                              <>You'll likely have ${((strategy.median_outcome - result.strategies[1].median_outcome) / 1000000).toFixed(1)}M more, but keep your mortgage payment obligation.</>
+                              <>You'll likely have ${medianDifference}M more, but keep your mortgage payment obligation.</>
                             ) : (
-                              <>You'll have about ${((result.strategies[0].median_outcome - strategy.median_outcome) / 1000000).toFixed(1)}M less, but eliminate your mortgage payment and reduce risk.</>
+                              <>You'll have about ${Math.abs(parseFloat(medianDifference)).toFixed(1)}M less, but eliminate your mortgage payment and reduce risk.</>
                             )}
                           </div>
                         </div>
