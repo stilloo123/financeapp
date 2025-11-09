@@ -292,7 +292,7 @@ export default function Calculator() {
                   />
                   <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                     <p className="text-xs text-blue-800">
-                      ℹ️ <strong>Enter in today's dollars</strong> - We'll automatically adjust for inflation (~3% per year) to maintain your purchasing power. Your mortgage payment stays constant and is calculated separately.
+                      ℹ️ <strong>Enter in today's dollars</strong> - We maintain purchasing power using inflation-adjusted returns. Your mortgage payment stays constant and is calculated separately.
                     </p>
                   </div>
                 </div>
