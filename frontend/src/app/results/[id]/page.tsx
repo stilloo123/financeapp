@@ -185,7 +185,7 @@ export default function ResultsPage() {
 
                   {/* Two Milestone Outcomes */}
                   <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-lg border border-green-200">
-                    <div className="text-xs font-semibold text-gray-700 mb-3">Most Likely Outcomes</div>
+                    <div className="text-xs font-semibold text-gray-700 mb-3">Median Outcomes</div>
 
                     {/* Mortgage Payoff Milestone */}
                     <div className="mb-3 pb-3 border-b border-green-200">
@@ -399,9 +399,9 @@ export default function ResultsPage() {
                           <div className="font-semibold text-gray-900 mb-1">Trade-off:</div>
                           <div className="text-gray-700">
                             {isKeepInvested ? (
-                              <>You'll likely have ${medianDifference}M more, but keep your mortgage payment obligation.</>
+                              <>Median outcome is ${medianDifference}M more, but you keep your mortgage payment obligation.</>
                             ) : (
-                              <>You'll have about ${Math.abs(parseFloat(medianDifference)).toFixed(1)}M less, but eliminate your mortgage payment and reduce risk.</>
+                              <>Median outcome is ${Math.abs(parseFloat(medianDifference)).toFixed(1)}M less, but you eliminate your mortgage payment and reduce risk.</>
                             )}
                           </div>
                         </div>
@@ -481,7 +481,7 @@ export default function ResultsPage() {
                                 <div className="font-semibold">{(strategy.success_rate * 100).toFixed(0)}%</div>
                               </div>
                               <div>
-                                <div className="text-gray-600">Most Likely</div>
+                                <div className="text-gray-600">Median</div>
                                 <div className="font-semibold">${(strategy.median_outcome / 1000000).toFixed(1)}M</div>
                               </div>
                             </div>
@@ -502,7 +502,7 @@ export default function ResultsPage() {
                                 </div>
                                 <div className="space-y-2 text-sm">
                                   <div className="flex justify-between items-center">
-                                    <span className="text-gray-700">Most Likely:</span>
+                                    <span className="text-gray-700">Median:</span>
                                     <span className="font-bold text-lg">${(strategy.median_at_payoff / 1000000).toFixed(1)}M</span>
                                   </div>
                                   <div className="flex justify-between items-center">
@@ -523,7 +523,7 @@ export default function ResultsPage() {
                                 </div>
                                 <div className="space-y-2 text-sm">
                                   <div className="flex justify-between items-center">
-                                    <span className="text-gray-700">Most Likely:</span>
+                                    <span className="text-gray-700">Median:</span>
                                     <span className="font-bold text-lg">${(strategy.median_outcome / 1000000).toFixed(1)}M</span>
                                   </div>
                                   {strategy.p10_outcome >= 0 ? (
