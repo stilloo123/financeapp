@@ -13,6 +13,7 @@ export default function Calculator() {
   const [employmentStatus, setEmploymentStatus] = useState<'working' | 'retired'>('retired')
   const [mortgageBalance, setMortgageBalance] = useState('500000')
   const [mortgageRate, setMortgageRate] = useState('3.0')
+  const [mortgageTerm, setMortgageTerm] = useState<'15' | '30'>('30')
   const [mortgageYears, setMortgageYears] = useState('25')
   const [portfolio, setPortfolio] = useState('5000000')
   const [stockAllocation, setStockAllocation] = useState('100')
@@ -23,6 +24,15 @@ export default function Calculator() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // Validate mortgage years <= mortgage term
+    const yearsRemaining = parseInt(mortgageYears)
+    const termYears = parseInt(mortgageTerm)
+    if (yearsRemaining > termYears) {
+      setError(`Years remaining (${yearsRemaining}) cannot exceed mortgage term (${termYears} years)`)
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -181,23 +191,43 @@ export default function Calculator() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Years remaining on mortgage
-                  </label>
-                  <input
-                    type="number"
-                    value={mortgageYears}
-                    onChange={(e) => setMortgageYears(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="e.g., 25"
-                    min="1"
-                    max="30"
-                    required
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    How many years until your mortgage is paid off?
-                  </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Original mortgage term
+                    </label>
+                    <select
+                      value={mortgageTerm}
+                      onChange={(e) => setMortgageTerm(e.target.value as '15' | '30')}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      required
+                    >
+                      <option value="15">15 years</option>
+                      <option value="30">30 years</option>
+                    </select>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Standard mortgage length
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Years remaining
+                    </label>
+                    <input
+                      type="number"
+                      value={mortgageYears}
+                      onChange={(e) => setMortgageYears(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="e.g., 25"
+                      min="1"
+                      max={mortgageTerm}
+                      required
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Years until paid off
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
