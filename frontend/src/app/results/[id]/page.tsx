@@ -484,6 +484,40 @@ export default function ResultsPage() {
                                 <div className="text-gray-600">Median</div>
                                 <div className="font-semibold">${(strategy.median_outcome / 1000000).toFixed(1)}M</div>
                               </div>
+                              <div>
+                                <div className="text-gray-600">Min</div>
+                                <div className="font-semibold">
+                                  {strategy.worst_periods && strategy.worst_periods.length > 0 ? (
+                                    <>
+                                      {strategy.worst_periods[0].final_balance < 0 ? (
+                                        <span className="text-red-600">Ran out</span>
+                                      ) : (
+                                        <span>${(strategy.worst_periods[0].final_balance / 1000000).toFixed(1)}M</span>
+                                      )}
+                                      <div className="text-xs text-gray-500 font-normal mt-0.5">
+                                        {strategy.worst_periods[0].period}
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <span>${(strategy.min_outcome / 1000000).toFixed(1)}M</span>
+                                  )}
+                                </div>
+                              </div>
+                              <div>
+                                <div className="text-gray-600">Max</div>
+                                <div className="font-semibold">
+                                  {strategy.best_periods && strategy.best_periods.length > 0 ? (
+                                    <>
+                                      <span>${(strategy.best_periods[0].final_balance / 1000000).toFixed(1)}M</span>
+                                      <div className="text-xs text-gray-500 font-normal mt-0.5">
+                                        {strategy.best_periods[0].period}
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <span>${(strategy.max_outcome / 1000000).toFixed(1)}M</span>
+                                  )}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
