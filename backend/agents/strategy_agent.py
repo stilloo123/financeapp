@@ -312,11 +312,12 @@ class StrategyAgent(BaseAgent):
                 result = self._simulate_portfolio(
                     portfolio,
                     window['returns'],
-                    total_spending,
+                    user_input['financial']['spending'],  # Living expenses only
                     mortgage_years,
                     user_input['financial']['stock_allocation_pct'],
                     bond_data,
-                    rebalance_annually=should_rebalance
+                    rebalance_annually=should_rebalance,
+                    mortgage_payment=mortgage_payment  # Separate mortgage payment
                 )
                 results_final.append(result['final'])
                 results_at_payoff.append(result['at_mortgage_payoff'])
@@ -527,10 +528,14 @@ class StrategyAgent(BaseAgent):
 
     def _simulate_portfolio(self, initial: float, returns: List[float], annual_withdrawal: float,
                             mortgage_years: int = None, stock_allocation_pct: float = 100.0,
-                            bond_returns = 4.0, rebalance_annually: bool = False) -> Dict[str, float]:
+                            bond_returns = 4.0, rebalance_annually: bool = False,
+                            mortgage_payment: float = 0.0) -> Dict[str, float]:
         """Simulate portfolio with withdrawals (retired).
 
         Args:
+            annual_withdrawal: Living expenses (excluding mortgage)
+            mortgage_payment: Mortgage payment (added for first mortgage_years, then drops to 0)
+            mortgage_years: Years until mortgage is paid off
             bond_returns: Either a float (constant rate) or List[float] (historical returns)
             rebalance_annually: If True, rebalance to target allocation each year (for bond fund option)
         """
@@ -554,11 +559,17 @@ class StrategyAgent(BaseAgent):
             bond_balance = None
 
         for year_idx, stock_return in enumerate(returns, start=1):
+            # Calculate withdrawal amount (includes mortgage payment until paid off)
+            if mortgage_years and year_idx <= mortgage_years:
+                total_withdrawal = annual_withdrawal + mortgage_payment
+            else:
+                total_withdrawal = annual_withdrawal
+
             if rebalance_annually:
                 # With rebalancing: track stock and bond separately
                 # Withdraw proportionally from both
-                withdrawal_from_stocks = annual_withdrawal * target_stock_pct
-                withdrawal_from_bonds = annual_withdrawal * target_bond_pct
+                withdrawal_from_stocks = total_withdrawal * target_stock_pct
+                withdrawal_from_bonds = total_withdrawal * target_bond_pct
 
                 stock_balance -= withdrawal_from_stocks
                 bond_balance -= withdrawal_from_bonds
@@ -581,7 +592,7 @@ class StrategyAgent(BaseAgent):
                 balance = total_balance
             else:
                 # Without rebalancing: use blended return (existing logic)
-                balance -= annual_withdrawal
+                balance -= total_withdrawal
 
                 # Get bond return for this year
                 if bond_returns_is_list:
