@@ -30,25 +30,42 @@ class StrategyAgent(BaseAgent):
 
         strategies = []
 
-        # Strategy 1: Pay off completely - Treasury Bonds
-        self.log_info("Testing Strategy 1: Pay off completely - Treasury Bonds")
-        strategy_1 = await self._test_payoff_completely(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="treasury")
-        strategies.append(strategy_1)
+        # Check if user has any bond allocation
+        stock_allocation = user_input['financial'].get('stock_allocation_pct', 100)
+        has_bonds = stock_allocation < 100
 
-        # Strategy 2: Pay off completely - Bond Fund
-        self.log_info("Testing Strategy 2: Pay off completely - Bond Fund")
-        strategy_2 = await self._test_payoff_completely(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="fund")
-        strategies.append(strategy_2)
+        if has_bonds:
+            # User has bonds - test both Treasury and Bond Fund scenarios
+            # Strategy 1: Pay off completely - Treasury Bonds
+            self.log_info("Testing Strategy 1: Pay off completely - Treasury Bonds")
+            strategy_1 = await self._test_payoff_completely(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="treasury")
+            strategies.append(strategy_1)
 
-        # Strategy 3: Keep 100% invested - Treasury Bonds
-        self.log_info("Testing Strategy 3: Keep 100% invested - Treasury Bonds")
-        strategy_3 = await self._test_keep_invested(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="treasury")
-        strategies.append(strategy_3)
+            # Strategy 2: Pay off completely - Bond Fund
+            self.log_info("Testing Strategy 2: Pay off completely - Bond Fund")
+            strategy_2 = await self._test_payoff_completely(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="fund")
+            strategies.append(strategy_2)
 
-        # Strategy 4: Keep 100% invested - Bond Fund
-        self.log_info("Testing Strategy 4: Keep 100% invested - Bond Fund")
-        strategy_4 = await self._test_keep_invested(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="fund")
-        strategies.append(strategy_4)
+            # Strategy 3: Keep 100% invested - Treasury Bonds
+            self.log_info("Testing Strategy 3: Keep 100% invested - Treasury Bonds")
+            strategy_3 = await self._test_keep_invested(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="treasury")
+            strategies.append(strategy_3)
+
+            # Strategy 4: Keep 100% invested - Bond Fund
+            self.log_info("Testing Strategy 4: Keep 100% invested - Bond Fund")
+            strategy_4 = await self._test_keep_invested(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="fund")
+            strategies.append(strategy_4)
+        else:
+            # 100% stocks - bond type doesn't matter, only test once per action
+            # Strategy 1: Pay off completely
+            self.log_info("Testing Strategy 1: Pay off completely (100% stocks)")
+            strategy_1 = await self._test_payoff_completely(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="treasury")
+            strategies.append(strategy_1)
+
+            # Strategy 2: Keep 100% invested
+            self.log_info("Testing Strategy 2: Keep 100% invested (100% stocks)")
+            strategy_2 = await self._test_keep_invested(user_input, historical_windows, projection_years, mortgage_years, bond_return, bond_type="treasury")
+            strategies.append(strategy_2)
 
         # Tag strategies by what they optimize for
         # Sort by median outcome to find highest money
@@ -64,10 +81,10 @@ class StrategyAgent(BaseAgent):
             -s['median_outcome']          # LOWER median = more conservative
         ), reverse=True)
 
-        # Assign tags - with 4 strategies, rank all by median outcome
+        # Assign tags to all strategies
         for i, s in enumerate(strategies):
             s['tags'] = []
-            s['rank'] = i + 1  # Rank 1-4 based on original order
+            s['rank'] = i + 1
             s['emoji'] = ''
 
         # Tag best money and best safety
