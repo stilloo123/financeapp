@@ -1,7 +1,8 @@
 """
 Data Loader Module
 
-Loads and manages historical S&P 500 return data.
+Loads and manages historical S&P 500 real (inflation-adjusted) return data.
+Uses FRED CPI data to convert nominal returns to real returns.
 """
 
 import json
@@ -10,20 +11,21 @@ from typing import List, Dict
 
 
 class SP500DataLoader:
-    """Loads and provides access to S&P 500 historical returns."""
+    """Loads and provides access to S&P 500 real (inflation-adjusted) historical returns."""
 
     def __init__(self, data_file_path: str = None):
         """
         Initialize the data loader.
 
         Args:
-            data_file_path: Path to sp500_returns.json file
+            data_file_path: Path to sp500_real_returns.json file (inflation-adjusted)
         """
         if data_file_path is None:
             # Default path relative to project root
             current_dir = os.path.dirname(os.path.abspath(__file__))
             project_root = os.path.dirname(os.path.dirname(current_dir))
-            data_file_path = os.path.join(project_root, 'data', 'sp500_returns.json')
+            # Use real (inflation-adjusted) returns by default
+            data_file_path = os.path.join(project_root, 'data', 'sp500_real_returns.json')
 
         self.data_file_path = data_file_path
         self.data = None

@@ -256,6 +256,9 @@ export default function ResultsPage() {
               <div className="bg-white rounded-lg shadow-lg p-4 text-xs text-gray-600">
                 <div className="font-semibold text-gray-900 mb-2">📊 Analysis Based On:</div>
                 <div className="space-y-1">
+                  <div>• Real (inflation-adjusted) returns</div>
+                  <div>• Your spending maintains purchasing power</div>
+                  <div>• Mortgage payment stays constant</div>
                   <div>• 100 years of S&P 500 data (1926-2025)</div>
                   <div>• 97 years of bond data (1928-2024)</div>
                   <div>• 75 historical 25-year periods</div>
@@ -264,7 +267,7 @@ export default function ResultsPage() {
                     <div>• Treasury: {result.bond_return_used.toFixed(2)}% (30-year)</div>
                   )}
                   <div>• Bond Fund: Damodaran 10-yr Treasury</div>
-                  <div className="text-gray-500 italic mt-2">Source: NYU Stern / CRSP</div>
+                  <div className="text-gray-500 italic mt-2">Source: NYU Stern / CRSP / FRED</div>
                 </div>
               </div>
 
@@ -285,11 +288,14 @@ export default function ResultsPage() {
               <div className="flex items-center gap-3">
                 <div className="text-3xl">📊</div>
                 <div>
-                  <div className="font-semibold text-gray-900 text-sm">Research-Grade Analysis</div>
+                  <div className="font-semibold text-gray-900 text-sm">Research-Grade Analysis with Inflation Adjustment</div>
                   <div className="text-xs text-gray-600 mt-1">
-                    Based on <span className="font-semibold">100 years of S&P 500</span> (1926-2025) +
+                    Based on <span className="font-semibold">real (inflation-adjusted) returns</span> •
+                    <span className="font-semibold"> 100 years of S&P 500</span> (1926-2025) +
                     <span className="font-semibold"> 97 years of bond data</span> (Damodaran 1928-2024) •
-                    <span className="font-semibold"> 300 backtested scenarios</span> across 75 historical periods
+                    <span className="font-semibold"> FRED CPI data</span> (1948-2024) •
+                    <span className="font-semibold"> 300 backtested scenarios</span> across 75 historical periods •
+                    Your spending maintains purchasing power
                   </div>
                 </div>
               </div>

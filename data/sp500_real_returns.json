@@ -1,0 +1,783 @@
+{
+  "metadata": {
+    "source": "NYU Stern (nominal returns) + FRED CPI (inflation adjustment)",
+    "description": "Real (inflation-adjusted) S&P 500 returns",
+    "period": "1948-2024",
+    "calculation": "Real return = Nominal return - CPI inflation rate",
+    "note": "Returns are in percentage points (e.g., 10.5 means 10.5%)"
+  },
+  "returns": [
+    {
+      "year": 1948,
+      "return": -2.17
+    },
+    {
+      "year": 1949,
+      "return": 19.77
+    },
+    {
+      "year": 1950,
+      "return": 30.65
+    },
+    {
+      "year": 1951,
+      "return": 16.08
+    },
+    {
+      "year": 1952,
+      "return": 16.09
+    },
+    {
+      "year": 1953,
+      "return": -1.75
+    },
+    {
+      "year": 1954,
+      "return": 52.26
+    },
+    {
+      "year": 1955,
+      "return": 31.82
+    },
+    {
+      "year": 1956,
+      "return": 5.09
+    },
+    {
+      "year": 1957,
+      "return": -14.17
+    },
+    {
+      "year": 1958,
+      "return": 40.63
+    },
+    {
+      "year": 1959,
+      "return": 11.03
+    },
+    {
+      "year": 1960,
+      "return": -1.02
+    },
+    {
+      "year": 1961,
+      "return": 25.82
+    },
+    {
+      "year": 1962,
+      "return": -9.91
+    },
+    {
+      "year": 1963,
+      "return": 21.54
+    },
+    {
+      "year": 1964,
+      "return": 15.16
+    },
+    {
+      "year": 1965,
+      "return": 10.87
+    },
+    {
+      "year": 1966,
+      "return": -13.05
+    },
+    {
+      "year": 1967,
+      "return": 21.2
+    },
+    {
+      "year": 1968,
+      "return": 6.82
+    },
+    {
+      "year": 1969,
+      "return": -13.94
+    },
+    {
+      "year": 1970,
+      "return": -1.87
+    },
+    {
+      "year": 1971,
+      "return": 10.08
+    },
+    {
+      "year": 1972,
+      "return": 15.71
+    },
+    {
+      "year": 1973,
+      "return": -20.92
+    },
+    {
+      "year": 1974,
+      "return": -37.48
+    },
+    {
+      "year": 1975,
+      "return": 28.06
+    },
+    {
+      "year": 1976,
+      "return": 18.07
+    },
+    {
+      "year": 1977,
+      "return": -13.65
+    },
+    {
+      "year": 1978,
+      "return": -1.07
+    },
+    {
+      "year": 1979,
+      "return": 7.19
+    },
+    {
+      "year": 1980,
+      "return": 18.92
+    },
+    {
+      "year": 1981,
+      "return": -15.29
+    },
+    {
+      "year": 1982,
+      "return": 15.39
+    },
+    {
+      "year": 1983,
+      "return": 19.4
+    },
+    {
+      "year": 1984,
+      "return": 1.9
+    },
+    {
+      "year": 1985,
+      "return": 28.2
+    },
+    {
+      "year": 1986,
+      "return": 16.73
+    },
+    {
+      "year": 1987,
+      "return": 1.67
+    },
+    {
+      "year": 1988,
+      "return": 12.51
+    },
+    {
+      "year": 1989,
+      "return": 26.9
+    },
+    {
+      "year": 1990,
+      "return": -8.52
+    },
+    {
+      "year": 1991,
+      "return": 26.25
+    },
+    {
+      "year": 1992,
+      "return": 4.58
+    },
+    {
+      "year": 1993,
+      "return": 7.11
+    },
+    {
+      "year": 1994,
+      "return": -1.28
+    },
+    {
+      "year": 1995,
+      "return": 34.77
+    },
+    {
+      "year": 1996,
+      "return": 20.02
+    },
+    {
+      "year": 1997,
+      "return": 31.02
+    },
+    {
+      "year": 1998,
+      "return": 27.03
+    },
+    {
+      "year": 1999,
+      "return": 18.85
+    },
+    {
+      "year": 2000,
+      "return": -12.47
+    },
+    {
+      "year": 2001,
+      "return": -14.71
+    },
+    {
+      "year": 2002,
+      "return": -23.7
+    },
+    {
+      "year": 2003,
+      "return": 26.38
+    },
+    {
+      "year": 2004,
+      "return": 8.21
+    },
+    {
+      "year": 2005,
+      "return": 1.54
+    },
+    {
+      "year": 2006,
+      "return": 12.57
+    },
+    {
+      "year": 2007,
+      "return": 2.62
+    },
+    {
+      "year": 2008,
+      "return": -40.81
+    },
+    {
+      "year": 2009,
+      "return": 26.78
+    },
+    {
+      "year": 2010,
+      "return": 13.42
+    },
+    {
+      "year": 2011,
+      "return": -1.03
+    },
+    {
+      "year": 2012,
+      "return": 13.93
+    },
+    {
+      "year": 2013,
+      "return": 30.92
+    },
+    {
+      "year": 2014,
+      "return": 12.07
+    },
+    {
+      "year": 2015,
+      "return": 1.26
+    },
+    {
+      "year": 2016,
+      "return": 10.69
+    },
+    {
+      "year": 2017,
+      "return": 19.7
+    },
+    {
+      "year": 2018,
+      "return": -6.82
+    },
+    {
+      "year": 2019,
+      "return": 29.68
+    },
+    {
+      "year": 2020,
+      "return": 17.15
+    },
+    {
+      "year": 2021,
+      "return": 24.03
+    },
+    {
+      "year": 2022,
+      "return": -26.1
+    },
+    {
+      "year": 2023,
+      "return": 22.16
+    },
+    {
+      "year": 2024,
+      "return": 22.07
+    }
+  ],
+  "detailed_returns": [
+    {
+      "year": 1948,
+      "nominal_return": 5.5,
+      "inflation": 7.67221,
+      "real_return": -2.17
+    },
+    {
+      "year": 1949,
+      "nominal_return": 18.79,
+      "inflation": -0.9808,
+      "real_return": 19.77
+    },
+    {
+      "year": 1950,
+      "nominal_return": 31.71,
+      "inflation": 1.06402,
+      "real_return": 30.65
+    },
+    {
+      "year": 1951,
+      "nominal_return": 24.02,
+      "inflation": 7.94113,
+      "real_return": 16.08
+    },
+    {
+      "year": 1952,
+      "nominal_return": 18.37,
+      "inflation": 2.28439,
+      "real_return": 16.09
+    },
+    {
+      "year": 1953,
+      "nominal_return": -0.99,
+      "inflation": 0.7591,
+      "real_return": -1.75
+    },
+    {
+      "year": 1954,
+      "nominal_return": 52.62,
+      "inflation": 0.36112,
+      "real_return": 52.26
+    },
+    {
+      "year": 1955,
+      "nominal_return": 31.56,
+      "inflation": -0.25746,
+      "real_return": 31.82
+    },
+    {
+      "year": 1956,
+      "nominal_return": 6.56,
+      "inflation": 1.47411,
+      "real_return": 5.09
+    },
+    {
+      "year": 1957,
+      "nominal_return": -10.78,
+      "inflation": 3.39269,
+      "real_return": -14.17
+    },
+    {
+      "year": 1958,
+      "nominal_return": 43.36,
+      "inflation": 2.73002,
+      "real_return": 40.63
+    },
+    {
+      "year": 1959,
+      "nominal_return": 11.96,
+      "inflation": 0.93199,
+      "real_return": 11.03
+    },
+    {
+      "year": 1960,
+      "nominal_return": 0.47,
+      "inflation": 1.49228,
+      "real_return": -1.02
+    },
+    {
+      "year": 1961,
+      "nominal_return": 26.89,
+      "inflation": 1.07036,
+      "real_return": 25.82
+    },
+    {
+      "year": 1962,
+      "nominal_return": -8.73,
+      "inflation": 1.17608,
+      "real_return": -9.91
+    },
+    {
+      "year": 1963,
+      "nominal_return": 22.8,
+      "inflation": 1.25606,
+      "real_return": 21.54
+    },
+    {
+      "year": 1964,
+      "nominal_return": 16.48,
+      "inflation": 1.32209,
+      "real_return": 15.16
+    },
+    {
+      "year": 1965,
+      "nominal_return": 12.45,
+      "inflation": 1.57869,
+      "real_return": 10.87
+    },
+    {
+      "year": 1966,
+      "nominal_return": -10.06,
+      "inflation": 2.98937,
+      "real_return": -13.05
+    },
+    {
+      "year": 1967,
+      "nominal_return": 23.98,
+      "inflation": 2.78455,
+      "real_return": 21.2
+    },
+    {
+      "year": 1968,
+      "nominal_return": 11.06,
+      "inflation": 4.24469,
+      "real_return": 6.82
+    },
+    {
+      "year": 1969,
+      "nominal_return": -8.5,
+      "inflation": 5.43713,
+      "real_return": -13.94
+    },
+    {
+      "year": 1970,
+      "nominal_return": 4.01,
+      "inflation": 5.88369,
+      "real_return": -1.87
+    },
+    {
+      "year": 1971,
+      "nominal_return": 14.31,
+      "inflation": 4.22656,
+      "real_return": 10.08
+    },
+    {
+      "year": 1972,
+      "nominal_return": 18.98,
+      "inflation": 3.27295,
+      "real_return": 15.71
+    },
+    {
+      "year": 1973,
+      "nominal_return": -14.66,
+      "inflation": 6.25872,
+      "real_return": -20.92
+    },
+    {
+      "year": 1974,
+      "nominal_return": -26.47,
+      "inflation": 11.01107,
+      "real_return": -37.48
+    },
+    {
+      "year": 1975,
+      "nominal_return": 37.2,
+      "inflation": 9.1416,
+      "real_return": 28.06
+    },
+    {
+      "year": 1976,
+      "nominal_return": 23.84,
+      "inflation": 5.77489,
+      "real_return": 18.07
+    },
+    {
+      "year": 1977,
+      "nominal_return": -7.18,
+      "inflation": 6.46956,
+      "real_return": -13.65
+    },
+    {
+      "year": 1978,
+      "nominal_return": 6.56,
+      "inflation": 7.62991,
+      "real_return": -1.07
+    },
+    {
+      "year": 1979,
+      "nominal_return": 18.44,
+      "inflation": 11.25303,
+      "real_return": 7.19
+    },
+    {
+      "year": 1980,
+      "nominal_return": 32.42,
+      "inflation": 13.50172,
+      "real_return": 18.92
+    },
+    {
+      "year": 1981,
+      "nominal_return": -4.91,
+      "inflation": 10.37831,
+      "real_return": -15.29
+    },
+    {
+      "year": 1982,
+      "nominal_return": 21.55,
+      "inflation": 6.15836,
+      "real_return": 15.39
+    },
+    {
+      "year": 1983,
+      "nominal_return": 22.56,
+      "inflation": 3.15953,
+      "real_return": 19.4
+    },
+    {
+      "year": 1984,
+      "nominal_return": 6.27,
+      "inflation": 4.3682,
+      "real_return": 1.9
+    },
+    {
+      "year": 1985,
+      "nominal_return": 31.73,
+      "inflation": 3.5279,
+      "real_return": 28.2
+    },
+    {
+      "year": 1986,
+      "nominal_return": 18.67,
+      "inflation": 1.94393,
+      "real_return": 16.73
+    },
+    {
+      "year": 1987,
+      "nominal_return": 5.25,
+      "inflation": 3.57821,
+      "real_return": 1.67
+    },
+    {
+      "year": 1988,
+      "nominal_return": 16.61,
+      "inflation": 4.10004,
+      "real_return": 12.51
+    },
+    {
+      "year": 1989,
+      "nominal_return": 31.69,
+      "inflation": 4.79109,
+      "real_return": 26.9
+    },
+    {
+      "year": 1990,
+      "nominal_return": -3.1,
+      "inflation": 5.41922,
+      "real_return": -8.52
+    },
+    {
+      "year": 1991,
+      "nominal_return": 30.47,
+      "inflation": 4.21583,
+      "real_return": 26.25
+    },
+    {
+      "year": 1992,
+      "nominal_return": 7.62,
+      "inflation": 3.04162,
+      "real_return": 4.58
+    },
+    {
+      "year": 1993,
+      "nominal_return": 10.08,
+      "inflation": 2.96965,
+      "real_return": 7.11
+    },
+    {
+      "year": 1994,
+      "nominal_return": 1.32,
+      "inflation": 2.5956,
+      "real_return": -1.28
+    },
+    {
+      "year": 1995,
+      "nominal_return": 37.58,
+      "inflation": 2.80542,
+      "real_return": 34.77
+    },
+    {
+      "year": 1996,
+      "nominal_return": 22.96,
+      "inflation": 2.93667,
+      "real_return": 20.02
+    },
+    {
+      "year": 1997,
+      "nominal_return": 33.36,
+      "inflation": 2.33757,
+      "real_return": 31.02
+    },
+    {
+      "year": 1998,
+      "nominal_return": 28.58,
+      "inflation": 1.54701,
+      "real_return": 27.03
+    },
+    {
+      "year": 1999,
+      "nominal_return": 21.04,
+      "inflation": 2.19314,
+      "real_return": 18.85
+    },
+    {
+      "year": 2000,
+      "nominal_return": -9.1,
+      "inflation": 3.36668,
+      "real_return": -12.47
+    },
+    {
+      "year": 2001,
+      "nominal_return": -11.89,
+      "inflation": 2.81663,
+      "real_return": -14.71
+    },
+    {
+      "year": 2002,
+      "nominal_return": -22.1,
+      "inflation": 1.59567,
+      "real_return": -23.7
+    },
+    {
+      "year": 2003,
+      "nominal_return": 28.68,
+      "inflation": 2.298,
+      "real_return": 26.38
+    },
+    {
+      "year": 2004,
+      "nominal_return": 10.88,
+      "inflation": 2.66757,
+      "real_return": 8.21
+    },
+    {
+      "year": 2005,
+      "nominal_return": 4.91,
+      "inflation": 3.36583,
+      "real_return": 1.54
+    },
+    {
+      "year": 2006,
+      "nominal_return": 15.79,
+      "inflation": 3.22209,
+      "real_return": 12.57
+    },
+    {
+      "year": 2007,
+      "nominal_return": 5.49,
+      "inflation": 2.87055,
+      "real_return": 2.62
+    },
+    {
+      "year": 2008,
+      "nominal_return": -37.0,
+      "inflation": 3.81495,
+      "real_return": -40.81
+    },
+    {
+      "year": 2009,
+      "nominal_return": 26.46,
+      "inflation": -0.32036,
+      "real_return": 26.78
+    },
+    {
+      "year": 2010,
+      "nominal_return": 15.06,
+      "inflation": 1.63657,
+      "real_return": 13.42
+    },
+    {
+      "year": 2011,
+      "nominal_return": 2.11,
+      "inflation": 3.13965,
+      "real_return": -1.03
+    },
+    {
+      "year": 2012,
+      "nominal_return": 16.0,
+      "inflation": 2.07319,
+      "real_return": 13.93
+    },
+    {
+      "year": 2013,
+      "nominal_return": 32.39,
+      "inflation": 1.46597,
+      "real_return": 30.92
+    },
+    {
+      "year": 2014,
+      "nominal_return": 13.69,
+      "inflation": 1.61546,
+      "real_return": 12.07
+    },
+    {
+      "year": 2015,
+      "nominal_return": 1.38,
+      "inflation": 0.12114,
+      "real_return": 1.26
+    },
+    {
+      "year": 2016,
+      "nominal_return": 11.96,
+      "inflation": 1.26736,
+      "real_return": 10.69
+    },
+    {
+      "year": 2017,
+      "nominal_return": 21.83,
+      "inflation": 2.13144,
+      "real_return": 19.7
+    },
+    {
+      "year": 2018,
+      "nominal_return": -4.38,
+      "inflation": 2.439,
+      "real_return": -6.82
+    },
+    {
+      "year": 2019,
+      "nominal_return": 31.49,
+      "inflation": 1.81326,
+      "real_return": 29.68
+    },
+    {
+      "year": 2020,
+      "nominal_return": 18.4,
+      "inflation": 1.25294,
+      "real_return": 17.15
+    },
+    {
+      "year": 2021,
+      "nominal_return": 28.71,
+      "inflation": 4.67912,
+      "real_return": 24.03
+    },
+    {
+      "year": 2022,
+      "nominal_return": -18.11,
+      "inflation": 7.99264,
+      "real_return": -26.1
+    },
+    {
+      "year": 2023,
+      "nominal_return": 26.29,
+      "inflation": 4.12772,
+      "real_return": 22.16
+    },
+    {
+      "year": 2024,
+      "nominal_return": 25.02,
+      "inflation": 2.95161,
+      "real_return": 22.07
+    }
+  ]
+}

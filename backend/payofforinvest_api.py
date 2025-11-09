@@ -37,8 +37,7 @@ class FinancialInput(BaseModel):
     stock_allocation_pct: float = Field(..., ge=0, le=100, description="Percentage of portfolio in stocks (rest in bonds)")
     income: Optional[float] = Field(None, gt=0, description="Annual additional income (if any)")
     income_years: Optional[int] = Field(None, gt=0, description="Number of years income will continue")
-    spending: float = Field(..., gt=0, description="Annual spending")
-    spending_includes_mortgage: bool = Field(..., description="Does spending include mortgage payment?")
+    spending: float = Field(..., gt=0, description="Annual spending (excluding mortgage payment)")
 
 
 class AnalysisRequest(BaseModel):
@@ -59,8 +58,8 @@ class AnalysisRequest(BaseModel):
                 },
                 "financial": {
                     "portfolio": 5000000,
-                    "spending": 200000,
-                    "spending_includes_mortgage": True
+                    "stock_allocation_pct": 100,
+                    "spending": 73000
                 }
             }
         }

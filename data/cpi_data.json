@@ -1,0 +1,318 @@
+{
+  "metadata": {
+    "source": "FRED API (Federal Reserve Bank of St. Louis)",
+    "series": "CPIAUCSL",
+    "description": "Annual inflation rates (CPI-U, percent change from year ago)",
+    "period": "1948-2024"
+  },
+  "inflation_rates": [
+    {
+      "year": 1948,
+      "inflation_rate": 7.67221
+    },
+    {
+      "year": 1949,
+      "inflation_rate": -0.9808
+    },
+    {
+      "year": 1950,
+      "inflation_rate": 1.06402
+    },
+    {
+      "year": 1951,
+      "inflation_rate": 7.94113
+    },
+    {
+      "year": 1952,
+      "inflation_rate": 2.28439
+    },
+    {
+      "year": 1953,
+      "inflation_rate": 0.7591
+    },
+    {
+      "year": 1954,
+      "inflation_rate": 0.36112
+    },
+    {
+      "year": 1955,
+      "inflation_rate": -0.25746
+    },
+    {
+      "year": 1956,
+      "inflation_rate": 1.47411
+    },
+    {
+      "year": 1957,
+      "inflation_rate": 3.39269
+    },
+    {
+      "year": 1958,
+      "inflation_rate": 2.73002
+    },
+    {
+      "year": 1959,
+      "inflation_rate": 0.93199
+    },
+    {
+      "year": 1960,
+      "inflation_rate": 1.49228
+    },
+    {
+      "year": 1961,
+      "inflation_rate": 1.07036
+    },
+    {
+      "year": 1962,
+      "inflation_rate": 1.17608
+    },
+    {
+      "year": 1963,
+      "inflation_rate": 1.25606
+    },
+    {
+      "year": 1964,
+      "inflation_rate": 1.32209
+    },
+    {
+      "year": 1965,
+      "inflation_rate": 1.57869
+    },
+    {
+      "year": 1966,
+      "inflation_rate": 2.98937
+    },
+    {
+      "year": 1967,
+      "inflation_rate": 2.78455
+    },
+    {
+      "year": 1968,
+      "inflation_rate": 4.24469
+    },
+    {
+      "year": 1969,
+      "inflation_rate": 5.43713
+    },
+    {
+      "year": 1970,
+      "inflation_rate": 5.88369
+    },
+    {
+      "year": 1971,
+      "inflation_rate": 4.22656
+    },
+    {
+      "year": 1972,
+      "inflation_rate": 3.27295
+    },
+    {
+      "year": 1973,
+      "inflation_rate": 6.25872
+    },
+    {
+      "year": 1974,
+      "inflation_rate": 11.01107
+    },
+    {
+      "year": 1975,
+      "inflation_rate": 9.1416
+    },
+    {
+      "year": 1976,
+      "inflation_rate": 5.77489
+    },
+    {
+      "year": 1977,
+      "inflation_rate": 6.46956
+    },
+    {
+      "year": 1978,
+      "inflation_rate": 7.62991
+    },
+    {
+      "year": 1979,
+      "inflation_rate": 11.25303
+    },
+    {
+      "year": 1980,
+      "inflation_rate": 13.50172
+    },
+    {
+      "year": 1981,
+      "inflation_rate": 10.37831
+    },
+    {
+      "year": 1982,
+      "inflation_rate": 6.15836
+    },
+    {
+      "year": 1983,
+      "inflation_rate": 3.15953
+    },
+    {
+      "year": 1984,
+      "inflation_rate": 4.3682
+    },
+    {
+      "year": 1985,
+      "inflation_rate": 3.5279
+    },
+    {
+      "year": 1986,
+      "inflation_rate": 1.94393
+    },
+    {
+      "year": 1987,
+      "inflation_rate": 3.57821
+    },
+    {
+      "year": 1988,
+      "inflation_rate": 4.10004
+    },
+    {
+      "year": 1989,
+      "inflation_rate": 4.79109
+    },
+    {
+      "year": 1990,
+      "inflation_rate": 5.41922
+    },
+    {
+      "year": 1991,
+      "inflation_rate": 4.21583
+    },
+    {
+      "year": 1992,
+      "inflation_rate": 3.04162
+    },
+    {
+      "year": 1993,
+      "inflation_rate": 2.96965
+    },
+    {
+      "year": 1994,
+      "inflation_rate": 2.5956
+    },
+    {
+      "year": 1995,
+      "inflation_rate": 2.80542
+    },
+    {
+      "year": 1996,
+      "inflation_rate": 2.93667
+    },
+    {
+      "year": 1997,
+      "inflation_rate": 2.33757
+    },
+    {
+      "year": 1998,
+      "inflation_rate": 1.54701
+    },
+    {
+      "year": 1999,
+      "inflation_rate": 2.19314
+    },
+    {
+      "year": 2000,
+      "inflation_rate": 3.36668
+    },
+    {
+      "year": 2001,
+      "inflation_rate": 2.81663
+    },
+    {
+      "year": 2002,
+      "inflation_rate": 1.59567
+    },
+    {
+      "year": 2003,
+      "inflation_rate": 2.298
+    },
+    {
+      "year": 2004,
+      "inflation_rate": 2.66757
+    },
+    {
+      "year": 2005,
+      "inflation_rate": 3.36583
+    },
+    {
+      "year": 2006,
+      "inflation_rate": 3.22209
+    },
+    {
+      "year": 2007,
+      "inflation_rate": 2.87055
+    },
+    {
+      "year": 2008,
+      "inflation_rate": 3.81495
+    },
+    {
+      "year": 2009,
+      "inflation_rate": -0.32036
+    },
+    {
+      "year": 2010,
+      "inflation_rate": 1.63657
+    },
+    {
+      "year": 2011,
+      "inflation_rate": 3.13965
+    },
+    {
+      "year": 2012,
+      "inflation_rate": 2.07319
+    },
+    {
+      "year": 2013,
+      "inflation_rate": 1.46597
+    },
+    {
+      "year": 2014,
+      "inflation_rate": 1.61546
+    },
+    {
+      "year": 2015,
+      "inflation_rate": 0.12114
+    },
+    {
+      "year": 2016,
+      "inflation_rate": 1.26736
+    },
+    {
+      "year": 2017,
+      "inflation_rate": 2.13144
+    },
+    {
+      "year": 2018,
+      "inflation_rate": 2.439
+    },
+    {
+      "year": 2019,
+      "inflation_rate": 1.81326
+    },
+    {
+      "year": 2020,
+      "inflation_rate": 1.25294
+    },
+    {
+      "year": 2021,
+      "inflation_rate": 4.67912
+    },
+    {
+      "year": 2022,
+      "inflation_rate": 7.99264
+    },
+    {
+      "year": 2023,
+      "inflation_rate": 4.12772
+    },
+    {
+      "year": 2024,
+      "inflation_rate": 2.95161
+    }
+  ]
+}

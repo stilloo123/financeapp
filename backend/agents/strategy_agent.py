@@ -115,17 +115,15 @@ class StrategyAgent(BaseAgent):
         is_retired = user_input['employment_status'] == 'retired'
 
         if is_retired:
-            # Calculate new withdrawal after paying off
+            # After paying off mortgage, spending stays the same (no mortgage payment needed)
+            # User's spending input already excludes mortgage
+            new_spending = user_input['financial']['spending']
+
             mortgage_payment = calculate_annual_payment(
                 user_input['mortgage']['balance'],
                 user_input['mortgage']['rate'],
                 user_input['mortgage']['years']
             )
-
-            if user_input['financial']['spending_includes_mortgage']:
-                new_spending = user_input['financial']['spending'] - mortgage_payment
-            else:
-                new_spending = user_input['financial']['spending']
 
             new_portfolio = user_input['financial']['portfolio'] - user_input['mortgage']['balance']
 
@@ -280,15 +278,26 @@ class StrategyAgent(BaseAgent):
 
         if is_retired:
             portfolio = user_input['financial']['portfolio']
-            spending = user_input['financial']['spending']
+
+            # Calculate mortgage payment to add to spending
+            mortgage_payment = calculate_annual_payment(
+                user_input['mortgage']['balance'],
+                user_input['mortgage']['rate'],
+                user_input['mortgage']['years']
+            )
+
+            # Total spending = living expenses + mortgage payment
+            total_spending = user_input['financial']['spending'] + mortgage_payment
 
             # DEBUG LOGGING
             print(f"\n{'='*60}")
             print(f"DEBUG: Keep 100% Invested Strategy")
             print(f"{'='*60}")
             print(f"Portfolio: ${portfolio:,.0f}")
-            print(f"Annual Spending: ${spending:,.0f}/year (includes mortgage)")
-            print(f"Withdrawal Rate: {spending/portfolio*100:.2f}%")
+            print(f"Living Expenses: ${user_input['financial']['spending']:,.0f}/year")
+            print(f"Mortgage Payment: ${mortgage_payment:,.2f}/year")
+            print(f"Total Annual Spending: ${total_spending:,.0f}/year")
+            print(f"Withdrawal Rate: {total_spending/portfolio*100:.2f}%")
             print(f"{'='*60}\n")
 
             results_final = []
@@ -303,7 +312,7 @@ class StrategyAgent(BaseAgent):
                 result = self._simulate_portfolio(
                     portfolio,
                     window['returns'],
-                    spending,
+                    total_spending,
                     mortgage_years,
                     user_input['financial']['stock_allocation_pct'],
                     bond_data,
@@ -435,16 +444,9 @@ class StrategyAgent(BaseAgent):
                 user_input['mortgage']['years']
             )
 
-            old_mortgage_payment = calculate_annual_payment(
-                user_input['mortgage']['balance'],
-                user_input['mortgage']['rate'],
-                user_input['mortgage']['years']
-            )
-
-            if user_input['financial']['spending_includes_mortgage']:
-                new_spending = user_input['financial']['spending'] - (old_mortgage_payment - new_mortgage_payment)
-            else:
-                new_spending = user_input['financial']['spending'] + new_mortgage_payment
+            # Total spending = living expenses (from user) + new mortgage payment
+            # User's spending input already excludes mortgage
+            new_spending = user_input['financial']['spending'] + new_mortgage_payment
 
             new_portfolio = user_input['financial']['portfolio'] - payoff_amount
 
