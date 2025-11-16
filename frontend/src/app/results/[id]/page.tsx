@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { CopilotKit, useCopilotReadable, useCopilotAction } from '@copilotkit/react-core'
+import { CopilotKit } from '@copilotkit/react-core'
 import { CopilotSidebar } from '@copilotkit/react-ui'
 import '@copilotkit/react-ui/styles.css'
 
@@ -91,28 +91,6 @@ export default function ResultsPage() {
     fetchResult()
   }, [analysisId, router])
 
-  // Make analysis results available to the AI
-  useCopilotReadable({
-    description: "The user's mortgage payoff analysis results",
-    value: result ? JSON.stringify({
-      recommended_strategy: result.recommended.name,
-      success_rate: (result.recommended.success_rate * 100).toFixed(0) + '%',
-      median_outcome: '$' + (result.recommended.median_outcome / 1000000).toFixed(1) + 'M',
-      conservative_estimate: '$' + (result.recommended.p10_outcome / 1000000).toFixed(1) + 'M',
-      user_age: result.user_input?.age,
-      portfolio: '$' + ((result.user_input?.financial?.portfolio || 0) / 1000000).toFixed(1) + 'M',
-      mortgage_balance: '$' + ((result.user_input?.mortgage?.balance || 0) / 1000).toFixed(0),
-      mortgage_rate: result.user_input?.mortgage?.rate + '%',
-      annual_spending: '$' + ((result.user_input?.financial?.spending || 0) / 1000).toFixed(0),
-      stock_allocation: result.user_input?.financial?.stock_allocation_pct + '%',
-      all_strategies: result.strategies.map(s => ({
-        name: s.name,
-        success_rate: (s.success_rate * 100).toFixed(0) + '%',
-        median: '$' + (s.median_outcome / 1000000).toFixed(1) + 'M'
-      }))
-    }) : 'No results yet'
-  })
-
   if (error) {
     return (
       <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
@@ -135,13 +113,46 @@ export default function ResultsPage() {
     )
   }
 
+  // Prepare context for AI - focus on explanation and reasoning
+  const aiContext = result ? `
+You are a financial advisor helping explain mortgage payoff analysis results. Your role is to EXPLAIN and provide REASONING, NOT to calculate or run simulations.
+
+USER'S SITUATION:
+Age: ${result.user_input?.age} | Portfolio: $${((result.user_input?.financial?.portfolio || 0) / 1000000).toFixed(1)}M | Mortgage: $${((result.user_input?.mortgage?.balance || 0) / 1000).toFixed(0)}K at ${result.user_input?.mortgage?.rate}% | ${result.user_input?.mortgage?.years} years left
+Annual Spending: $${((result.user_input?.financial?.spending || 0) / 1000).toFixed(0)}K (excluding mortgage) | Allocation: ${result.user_input?.financial?.stock_allocation_pct}% stocks
+
+RECOMMENDED: ${result.recommended.name}
+- Success Rate: ${(result.recommended.success_rate * 100).toFixed(0)}%
+- Median Outcome: $${(result.recommended.median_outcome / 1000000).toFixed(1)}M
+- Conservative Case: $${(result.recommended.p10_outcome / 1000000).toFixed(1)}M
+
+OTHER OPTIONS:
+${result.strategies.filter(s => s.name !== result.recommended.name).map(s => `- ${s.name}: ${(s.success_rate * 100).toFixed(0)}% success, $${(s.median_outcome / 1000000).toFixed(1)}M median`).join('\n')}
+
+YOUR ROLE:
+✅ Explain WHY the recommendation makes sense
+✅ Clarify what the numbers mean in plain English
+✅ Explain trade-offs between strategies
+✅ Help user understand risks and opportunities
+✅ Provide context about success rates, percentiles, etc.
+
+❌ DO NOT calculate "what if" scenarios
+❌ DO NOT make up new numbers
+❌ If asked "what if", explain directionally what would likely happen, but tell them to run a new analysis with those parameters
+
+Be conversational, clear, and focus on helping them understand their results and make an informed decision.
+  ` : ''
+
   return (
-    <CopilotKit runtimeUrl="/api/copilotkit">
+    <CopilotKit
+      runtimeUrl="/api/copilotkit"
+      instructions={aiContext}
+    >
       <CopilotSidebar
         defaultOpen={false}
         labels={{
           title: "Ask About Your Results",
-          initial: "Ask me anything about your mortgage analysis! Try 'What if I retire 5 years earlier?' or 'How would 7% stock returns affect my outcome?'"
+          initial: "I can help explain your results! Ask me:\n• Why is this strategy recommended for me?\n• What does the success rate really mean?\n• Explain the trade-offs\n• What should I be worried about?\n• Break this down in simple terms"
         }}
       >
         <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
