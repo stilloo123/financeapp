@@ -566,9 +566,6 @@ video {
 .ml-auto {
   margin-left: auto;
 }
-.mr-2 {
-  margin-right: 0.5rem;
-}
 .mr-3 {
   margin-right: 0.75rem;
 }
@@ -1023,6 +1020,9 @@ video {
 }
 .font-medium {
   font-weight: 500;
+}
+.font-normal {
+  font-weight: 400;
 }
 .font-semibold {
   font-weight: 600;

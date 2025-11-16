@@ -1,5 +1,6 @@
 {
-  "/analysis/[id]/page": "app/analysis/[id]/page.js",
+  "/api/copilotkit/route": "app/api/copilotkit/route.js",
   "/calculator/page": "app/calculator/page.js",
+  "/analysis/[id]/page": "app/analysis/[id]/page.js",
   "/results/[id]/page": "app/results/[id]/page.js"
 }

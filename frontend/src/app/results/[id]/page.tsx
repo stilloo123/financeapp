@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { CopilotKit, useCopilotReadable, useCopilotAction } from '@copilotkit/react-core'
+import { CopilotSidebar } from '@copilotkit/react-ui'
+import '@copilotkit/react-ui/styles.css'
 
 interface PeriodDetail {
   period: string
@@ -88,6 +91,28 @@ export default function ResultsPage() {
     fetchResult()
   }, [analysisId, router])
 
+  // Make analysis results available to the AI
+  useCopilotReadable({
+    description: "The user's mortgage payoff analysis results",
+    value: result ? JSON.stringify({
+      recommended_strategy: result.recommended.name,
+      success_rate: (result.recommended.success_rate * 100).toFixed(0) + '%',
+      median_outcome: '$' + (result.recommended.median_outcome / 1000000).toFixed(1) + 'M',
+      conservative_estimate: '$' + (result.recommended.p10_outcome / 1000000).toFixed(1) + 'M',
+      user_age: result.user_input?.age,
+      portfolio: '$' + ((result.user_input?.financial?.portfolio || 0) / 1000000).toFixed(1) + 'M',
+      mortgage_balance: '$' + ((result.user_input?.mortgage?.balance || 0) / 1000).toFixed(0),
+      mortgage_rate: result.user_input?.mortgage?.rate + '%',
+      annual_spending: '$' + ((result.user_input?.financial?.spending || 0) / 1000).toFixed(0),
+      stock_allocation: result.user_input?.financial?.stock_allocation_pct + '%',
+      all_strategies: result.strategies.map(s => ({
+        name: s.name,
+        success_rate: (s.success_rate * 100).toFixed(0) + '%',
+        median: '$' + (s.median_outcome / 1000000).toFixed(1) + 'M'
+      }))
+    }) : 'No results yet'
+  })
+
   if (error) {
     return (
       <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
@@ -111,7 +136,15 @@ export default function ResultsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
+    <CopilotKit runtimeUrl="/api/copilotkit">
+      <CopilotSidebar
+        defaultOpen={false}
+        labels={{
+          title: "Ask About Your Results",
+          initial: "Ask me anything about your mortgage analysis! Try 'What if I retire 5 years earlier?' or 'How would 7% stock returns affect my outcome?'"
+        }}
+      >
+        <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* 2-Column Layout (Sticky Summary + Scrollable Details) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -723,6 +756,8 @@ export default function ResultsPage() {
           opacity: 0;
         }
       `}</style>
-    </main>
+        </main>
+      </CopilotSidebar>
+    </CopilotKit>
   )
 }
