@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { CopilotKit } from '@copilotkit/react-core'
-import { CopilotSidebar } from '@copilotkit/react-ui'
+import { CopilotKit, useCopilotReadable } from '@copilotkit/react-core'
+import { CopilotSidebar, useCopilotChatSuggestions } from '@copilotkit/react-ui'
 import '@copilotkit/react-ui/styles.css'
 
 interface PeriodDetail {
@@ -60,6 +60,58 @@ interface AnalysisResult {
     [key: string]: any
   }
   bond_return_used?: number
+}
+
+// Helper component to set up chat suggestions (must be inside CopilotKit provider)
+function ChatSuggestionsHandler({ result }: { result: AnalysisResult | null }) {
+  // Make the analysis results explicitly readable by the AI
+  useCopilotReadable({
+    description: "The user's mortgage payoff analysis results with all details",
+    value: result ? {
+      userAge: result.user_input?.age,
+      portfolio: result.user_input?.financial?.portfolio,
+      mortgageBalance: result.user_input?.mortgage?.balance,
+      mortgageRate: result.user_input?.mortgage?.rate,
+      mortgageYearsLeft: result.user_input?.mortgage?.years,
+      annualSpending: result.user_input?.financial?.spending,
+      stockAllocation: result.user_input?.financial?.stock_allocation_pct,
+      recommendedStrategy: {
+        name: result.recommended.name,
+        successRate: result.recommended.success_rate,
+        medianOutcome: result.recommended.median_outcome,
+        conservativeOutcome: result.recommended.p10_outcome,
+        optimisticOutcome: result.recommended.p90_outcome,
+      },
+      allStrategies: result.strategies.map(s => ({
+        name: s.name,
+        successRate: s.success_rate,
+        medianOutcome: s.median_outcome,
+        p10Outcome: s.p10_outcome,
+        p90Outcome: s.p90_outcome,
+      })),
+      risks: result.risks,
+    } : null,
+  })
+
+  useCopilotChatSuggestions({
+    instructions: result ? `Generate 5 helpful question suggestions about this mortgage payoff analysis. The user wants to understand:
+- Why the "${result.recommended.name}" strategy was recommended
+- What the success rate (${(result.recommended.success_rate * 100).toFixed(0)}%) really means
+- Trade-offs between strategies
+- Risks and concerns
+- Simple explanations of the results
+
+Suggest concise, actionable questions like:
+- "Why is this strategy recommended for me?"
+- "What does the success rate really mean?"
+- "Explain the trade-offs"
+- "What should I be worried about?"
+- "Break this down in simple terms"` : "",
+    minSuggestions: 5,
+    maxSuggestions: 5,
+  }, [result])
+
+  return null
 }
 
 export default function ResultsPage() {
@@ -124,30 +176,45 @@ export default function ResultsPage() {
   const aiContext = result ? `
 You are a financial advisor helping explain mortgage payoff analysis results. Your role is to EXPLAIN and provide REASONING, NOT to calculate or run simulations.
 
-USER'S SITUATION:
-Age: ${result.user_input?.age} | Portfolio: $${((result.user_input?.financial?.portfolio || 0) / 1000000).toFixed(1)}M | Mortgage: $${((result.user_input?.mortgage?.balance || 0) / 1000).toFixed(0)}K at ${result.user_input?.mortgage?.rate}% | ${result.user_input?.mortgage?.years} years left
-Annual Spending: $${((result.user_input?.financial?.spending || 0) / 1000).toFixed(0)}K (excluding mortgage) | Allocation: ${result.user_input?.financial?.stock_allocation_pct}% stocks
+CRITICAL INSTRUCTIONS:
+🚫 DO NOT use any tools or actions
+🚫 DO NOT say you need to "retrieve", "check", "review", or "look up" information
+✅ ALL information is already available to you via useCopilotReadable
+✅ Answer questions IMMEDIATELY and DIRECTLY using the data you already have access to
 
-RECOMMENDED: ${result.recommended.name}
+USER'S SITUATION (all data already available to you):
+Age: ${result.user_input?.age}
+Portfolio: $${((result.user_input?.financial?.portfolio || 0) / 1000000).toFixed(1)}M
+Mortgage: $${((result.user_input?.mortgage?.balance || 0) / 1000).toFixed(0)}K at ${result.user_input?.mortgage?.rate}% with ${result.user_input?.mortgage?.years} years left
+Annual Spending: $${((result.user_input?.financial?.spending || 0) / 1000).toFixed(0)}K (excluding mortgage)
+Stock Allocation: ${result.user_input?.financial?.stock_allocation_pct}%
+
+RECOMMENDED STRATEGY: ${result.recommended.name}
 - Success Rate: ${(result.recommended.success_rate * 100).toFixed(0)}%
 - Median Outcome: $${(result.recommended.median_outcome / 1000000).toFixed(1)}M
-- Conservative Case: $${(result.recommended.p10_outcome / 1000000).toFixed(1)}M
+- Conservative Case (10th percentile): $${(result.recommended.p10_outcome / 1000000).toFixed(1)}M
+- Optimistic Case (90th percentile): $${(result.recommended.p90_outcome / 1000000).toFixed(1)}M
 
-OTHER OPTIONS:
-${result.strategies.filter(s => s.name !== result.recommended.name).map(s => `- ${s.name}: ${(s.success_rate * 100).toFixed(0)}% success, $${(s.median_outcome / 1000000).toFixed(1)}M median`).join('\n')}
+OTHER OPTIONS ANALYZED:
+${result.strategies.filter(s => s.name !== result.recommended.name).map(s => `- ${s.name}: ${(s.success_rate * 100).toFixed(0)}% success rate, $${(s.median_outcome / 1000000).toFixed(1)}M median outcome`).join('\n')}
 
-YOUR ROLE:
-✅ Explain WHY the recommendation makes sense
+HOW TO ANSWER:
+✅ Start your response immediately with the answer - no preamble
+✅ Reference specific numbers from the data above
+✅ Explain WHY this recommendation makes sense for this user
 ✅ Clarify what the numbers mean in plain English
-✅ Explain trade-offs between strategies
+✅ Explain trade-offs between strategies using the comparison data
 ✅ Help user understand risks and opportunities
-✅ Provide context about success rates, percentiles, etc.
 
-❌ DO NOT calculate "what if" scenarios
-❌ DO NOT make up new numbers
-❌ If asked "what if", explain directionally what would likely happen, but tell them to run a new analysis with those parameters
+FORBIDDEN:
+❌ Never say "let me check/retrieve/review" - you already have all the data
+❌ Never use any tools or actions
+❌ Never calculate new "what if" scenarios
+❌ Never make up new numbers
 
-Be conversational, clear, and focus on helping them understand their results and make an informed decision.
+Example good response: "The 'Keep 100% Invested' strategy is recommended for you because with your $2.0M portfolio and 3.5% mortgage rate, keeping your money invested has a 95% success rate vs 92% for paying off the mortgage. In typical scenarios, you'd end up with $3.5M vs $3.2M..."
+
+Example bad response: "To provide a precise response, let me check the details..." ❌ NEVER DO THIS
   ` : ''
 
   return (
@@ -156,14 +223,14 @@ Be conversational, clear, and focus on helping them understand their results and
       runtimeUrl="/api/copilotkit"
       instructions={aiContext}
     >
+      <ChatSuggestionsHandler result={result} />
       <CopilotSidebar
         defaultOpen={chatOpen}
         onSetOpen={setChatOpen}
         clickOutsideToClose={true}
-        showOpenButton={false}
         labels={{
           title: "Ask About Your Results",
-          initial: prefilledQuestion || "I can help explain your results! Click the question buttons on the left or ask your own."
+          initial: "I can help explain your results! Click a suggestion below or ask your own question:"
         }}
       >
         <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
@@ -304,43 +371,6 @@ Be conversational, clear, and focus on helping them understand their results and
                 <div className="font-semibold text-gray-900 mb-2">💡 Key Insight</div>
                 <div className="text-gray-700">
                   {result.insights[0]?.message || 'Analysis complete based on historical data.'}
-                </div>
-              </div>
-
-              {/* AI Questions */}
-              <div className="bg-white rounded-lg shadow-lg p-4">
-                <div className="font-semibold text-gray-900 mb-3 text-sm">🤖 Ask AI</div>
-                <div className="space-y-2">
-                  <button
-                    onClick={() => askQuestion('Why is this strategy recommended for me?')}
-                    className="w-full text-left px-3 py-2 text-xs bg-blue-50 hover:bg-blue-100 text-blue-800 rounded-lg transition-colors border border-blue-200"
-                  >
-                    💡 Why this recommendation?
-                  </button>
-                  <button
-                    onClick={() => askQuestion('What does the success rate really mean?')}
-                    className="w-full text-left px-3 py-2 text-xs bg-purple-50 hover:bg-purple-100 text-purple-800 rounded-lg transition-colors border border-purple-200"
-                  >
-                    📊 Explain success rate
-                  </button>
-                  <button
-                    onClick={() => askQuestion('Explain the trade-offs between paying off vs keeping invested')}
-                    className="w-full text-left px-3 py-2 text-xs bg-green-50 hover:bg-green-100 text-green-800 rounded-lg transition-colors border border-green-200"
-                  >
-                    ⚖️ Compare trade-offs
-                  </button>
-                  <button
-                    onClick={() => askQuestion('What should I be worried about?')}
-                    className="w-full text-left px-3 py-2 text-xs bg-orange-50 hover:bg-orange-100 text-orange-800 rounded-lg transition-colors border border-orange-200"
-                  >
-                    ⚠️ Biggest risks
-                  </button>
-                  <button
-                    onClick={() => askQuestion('Break this down in simple terms')}
-                    className="w-full text-left px-3 py-2 text-xs bg-yellow-50 hover:bg-yellow-100 text-yellow-800 rounded-lg transition-colors border border-yellow-200"
-                  >
-                    📝 Simplify this
-                  </button>
                 </div>
               </div>
 
