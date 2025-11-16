@@ -160,6 +160,7 @@ Be conversational, clear, and focus on helping them understand their results and
         defaultOpen={chatOpen}
         onSetOpen={setChatOpen}
         clickOutsideToClose={true}
+        showOpenButton={false}
         labels={{
           title: "Ask About Your Results",
           initial: prefilledQuestion || "I can help explain your results! Click the question buttons on the left or ask your own."
