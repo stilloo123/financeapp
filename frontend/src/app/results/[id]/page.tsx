@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { CopilotKit } from '@copilotkit/react-core'
+import { CopilotKit, useCopilotChatSuggestions } from '@copilotkit/react-core'
 import { CopilotSidebar } from '@copilotkit/react-ui'
 import '@copilotkit/react-ui/styles.css'
 
@@ -60,6 +60,41 @@ interface AnalysisResult {
     [key: string]: any
   }
   bond_return_used?: number
+}
+
+// Component to show clickable question suggestions
+function ChatSuggestions() {
+  useCopilotChatSuggestions({
+    instructions: "Suggest helpful questions the user might want to ask about their mortgage analysis results",
+    suggestions: [
+      {
+        title: "Why this recommendation?",
+        message: "Why is this strategy recommended for me?",
+        partial: false
+      },
+      {
+        title: "Explain success rate",
+        message: "What does the success rate really mean?",
+        partial: false
+      },
+      {
+        title: "Trade-offs",
+        message: "Explain the trade-offs between paying off vs keeping invested",
+        partial: false
+      },
+      {
+        title: "Biggest risks",
+        message: "What should I be worried about?",
+        partial: false
+      },
+      {
+        title: "Simplify this",
+        message: "Break this down in simple terms",
+        partial: false
+      }
+    ]
+  })
+  return null
 }
 
 export default function ResultsPage() {
@@ -152,9 +187,10 @@ Be conversational, clear, and focus on helping them understand their results and
         defaultOpen={false}
         labels={{
           title: "Ask About Your Results",
-          initial: "I can help explain your results! Ask me:\n• Why is this strategy recommended for me?\n• What does the success rate really mean?\n• Explain the trade-offs\n• What should I be worried about?\n• Break this down in simple terms"
+          initial: "Click a question below or ask your own!"
         }}
       >
+        <ChatSuggestions />
         <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* 2-Column Layout (Sticky Summary + Scrollable Details) */}
