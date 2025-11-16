@@ -152,6 +152,7 @@ Be conversational, clear, and focus on helping them understand their results and
 
   return (
     <CopilotKit
+      publicApiKey={process.env.NEXT_PUBLIC_COPILOTKIT_PUBLIC_KEY}
       runtimeUrl="/api/copilotkit"
       instructions={aiContext}
     >
