@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { CopilotKit, useCopilotChatSuggestions } from '@copilotkit/react-core'
+import { CopilotKit } from '@copilotkit/react-core'
 import { CopilotSidebar } from '@copilotkit/react-ui'
 import '@copilotkit/react-ui/styles.css'
 
@@ -62,41 +62,6 @@ interface AnalysisResult {
   bond_return_used?: number
 }
 
-// Component to show clickable question suggestions
-function ChatSuggestions() {
-  useCopilotChatSuggestions({
-    instructions: "Suggest helpful questions the user might want to ask about their mortgage analysis results",
-    suggestions: [
-      {
-        title: "Why this recommendation?",
-        message: "Why is this strategy recommended for me?",
-        partial: false
-      },
-      {
-        title: "Explain success rate",
-        message: "What does the success rate really mean?",
-        partial: false
-      },
-      {
-        title: "Trade-offs",
-        message: "Explain the trade-offs between paying off vs keeping invested",
-        partial: false
-      },
-      {
-        title: "Biggest risks",
-        message: "What should I be worried about?",
-        partial: false
-      },
-      {
-        title: "Simplify this",
-        message: "Break this down in simple terms",
-        partial: false
-      }
-    ]
-  })
-  return null
-}
-
 export default function ResultsPage() {
   const params = useParams()
   const router = useRouter()
@@ -105,6 +70,13 @@ export default function ResultsPage() {
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState('')
   const [expandedStrategy, setExpandedStrategy] = useState<string | null>(null)
+  const [chatOpen, setChatOpen] = useState(false)
+  const [prefilledQuestion, setPrefilledQuestion] = useState('')
+
+  const askQuestion = (question: string) => {
+    setPrefilledQuestion(question)
+    setChatOpen(true)
+  }
 
   useEffect(() => {
     // Fetch the completed analysis result
@@ -184,13 +156,14 @@ Be conversational, clear, and focus on helping them understand their results and
       instructions={aiContext}
     >
       <CopilotSidebar
-        defaultOpen={false}
+        defaultOpen={chatOpen}
+        onSetOpen={setChatOpen}
+        clickOutsideToClose={true}
         labels={{
           title: "Ask About Your Results",
-          initial: "Click a question below or ask your own!"
+          initial: prefilledQuestion || "I can help explain your results! Click the question buttons on the left or ask your own."
         }}
       >
-        <ChatSuggestions />
         <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* 2-Column Layout (Sticky Summary + Scrollable Details) */}
@@ -329,6 +302,43 @@ Be conversational, clear, and focus on helping them understand their results and
                 <div className="font-semibold text-gray-900 mb-2">💡 Key Insight</div>
                 <div className="text-gray-700">
                   {result.insights[0]?.message || 'Analysis complete based on historical data.'}
+                </div>
+              </div>
+
+              {/* AI Questions */}
+              <div className="bg-white rounded-lg shadow-lg p-4">
+                <div className="font-semibold text-gray-900 mb-3 text-sm">🤖 Ask AI</div>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => askQuestion('Why is this strategy recommended for me?')}
+                    className="w-full text-left px-3 py-2 text-xs bg-blue-50 hover:bg-blue-100 text-blue-800 rounded-lg transition-colors border border-blue-200"
+                  >
+                    💡 Why this recommendation?
+                  </button>
+                  <button
+                    onClick={() => askQuestion('What does the success rate really mean?')}
+                    className="w-full text-left px-3 py-2 text-xs bg-purple-50 hover:bg-purple-100 text-purple-800 rounded-lg transition-colors border border-purple-200"
+                  >
+                    📊 Explain success rate
+                  </button>
+                  <button
+                    onClick={() => askQuestion('Explain the trade-offs between paying off vs keeping invested')}
+                    className="w-full text-left px-3 py-2 text-xs bg-green-50 hover:bg-green-100 text-green-800 rounded-lg transition-colors border border-green-200"
+                  >
+                    ⚖️ Compare trade-offs
+                  </button>
+                  <button
+                    onClick={() => askQuestion('What should I be worried about?')}
+                    className="w-full text-left px-3 py-2 text-xs bg-orange-50 hover:bg-orange-100 text-orange-800 rounded-lg transition-colors border border-orange-200"
+                  >
+                    ⚠️ Biggest risks
+                  </button>
+                  <button
+                    onClick={() => askQuestion('Break this down in simple terms')}
+                    className="w-full text-left px-3 py-2 text-xs bg-yellow-50 hover:bg-yellow-100 text-yellow-800 rounded-lg transition-colors border border-yellow-200"
+                  >
+                    📝 Simplify this
+                  </button>
                 </div>
               </div>
 
